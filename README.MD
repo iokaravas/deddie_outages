@@ -34,7 +34,7 @@ Example run to get all outages for ATTICA (ΑΤΤΙΚΗ)
     
 Getting all options
     
-    node deddie_outpages.js --help
+    deddie_outpages.js --help
     
     In order to use you need a prefectureID (--p) and a municipalityID (--m)
     You can get a list using --list-prefectures and --list-municipalities=number
