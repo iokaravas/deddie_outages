@@ -3,9 +3,8 @@ require('dotenv').config()
 const options = {
   interval: 30, // minutes
   notify: false, // default option
-  // prefectureID: 15, // Get this by checking out https://siteapps.deddie.gr/Outages2Public
-  // municipalityID: 306, // Same as prefectureID
   dataFile: __dirname + '/.outages.json',
+  csvFile: __dirname + '/prefs.munics.csv',
   pushover: {
     user: process.env.PUSHOVER_USER,
     token: process.env.PUSHOVER_TOKEN,

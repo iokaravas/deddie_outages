@@ -3,6 +3,11 @@ const push = require('pushover-notifications')
 
 const sendPushNotification = (options,outages) => {
 
+  if (!options.pushover.user) {
+    log.error('sendPushNotification(): .env file is not set, cannot send notification. Check README.MD')
+    return false
+  }
+
   log.info('sendPushNotification() : Notifying user via pushover')
 
   // Create new outages' messages

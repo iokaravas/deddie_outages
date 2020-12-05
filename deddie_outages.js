@@ -1,6 +1,6 @@
 const options = require('./options.js')
 const fetcher = require('./helpers/fetcher.js')
-const {readDataFile, updateDataFile} = require('./helpers/fileHandler.js')
+const {readDataFile, updateDataFile, readPrefecturesFile} = require('./helpers/fileHandler.js')
 const {sendPushNotification} = require('./helpers/pushover.js')
 const log = require('./helpers/log.js')
 
@@ -111,6 +111,7 @@ const argopts = {
   boolean: true,
   default: {
     'notify': false,
+    'list-prefectures': false
   }
 }
 
@@ -121,9 +122,39 @@ options.municipalityID = argv.m
 options.interval = (argv.runevery) ? argv.runevery : false
 options.notify = argv.notify
 
-if (argv.hasOwnProperty('help')||(!options.municipalityID||!options.prefectureID)) {
+if (argv['list-prefectures'] || argv['list-municipalities'] ) {
+  let file = readPrefecturesFile(options)
+  let results = []
+
+  // Split CSV file - this works forw now (simple splitting)
+  file.split('\n').forEach((line)=>{
+    const fields = line.split(',')
+
+    const entry = {
+      prefectureID : fields[0],
+      municipalityID : fields[1],
+      name : fields[2]
+    }
+
+    if (argv['list-prefectures']) {
+      if (!entry.municipalityID) results.push(entry)
+    } else if (argv['list-municipalities']) {
+      if (entry.prefectureID==argv['list-municipalities']) {
+        results.push(entry)
+      }
+    }
+  })
+
+  log.normal(`Prefectures/Municipalities: `)
+
+  results.forEach((r)=>{
+    if (argv['list-prefectures']) log.normal(`${r.prefectureID} | ${r.name}`)
+    if (argv['list-municipalities']) log.normal(`${r.prefectureID} | ${r.municipalityID} | ${r.name}`)
+  })
+
+}else if (argv['help']||!options.prefectureID) {
   log.normal('In order to use you need a prefectureID (--p) and a municipalityID (--m)')
-  log.normal('You can get that by checking out https://siteapps.deddie.gr/Outages2Public, more info in README')
+  log.normal('You can get a list using --list-prefectures and --list-municipalities=number')
   log.normal('---')
   log.normal('Usage: < --p=number --m=number [--runevery=number (minutes)] [--notify]')
   log.normal(' deddie_outages --p=10 --m=112 --runevery=3 --notify')

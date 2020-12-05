@@ -38,7 +38,23 @@ const updateDataFile = (options, data) => {
   })
 }
 
+const readPrefecturesFile = (options) => {
+
+  if (fs.existsSync(options.csvFile)) { // Read data file if exists
+    try {
+      return fs.readFileSync(options.csvFile, 'utf8')
+    } catch (e) { // Handle case where the file format is messed up / empty file
+      log.warning('Unable to read data file ' + options.csvFile)
+      return ''
+    }
+  } else {
+    log.warning('Missing prefecture/municipalities file ' + options.csvFile)
+    return ''
+  }
+}
+
 module.exports = {
   readDataFile,
-  updateDataFile
+  updateDataFile,
+  readPrefecturesFile
 }
