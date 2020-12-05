@@ -1,0 +1,18 @@
+{
+  "name": "deddie_outages",
+  "version": "1.0.0",
+  "description": "A script that pulls planned power interruptions for services off of DEDDIE's website (deddie.gr)",
+  "main": "deddie_outages.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ['script','scrape','deddie','power','power service','greece power','deh','dei'],
+  "author": "Ioannis Karavas",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "minimist": "^1.2.5",
+    "pushover-notifications": "^1.2.2"
+  }
+}
