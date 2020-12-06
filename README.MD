@@ -75,6 +75,7 @@ Parsing is quite fragile. Since sites change all the time, it is not uncommon fo
 ### TODO
 Several things could be added and/or improved, including :
 
+* Perhaps use of node-cron for refined scheduling?
 * Better way to read CSV? Didn't want to include a csv reader...
 * Allow for better search for prefectures/municipalities
 * Handle more potential errors
