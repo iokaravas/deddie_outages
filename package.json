@@ -6,13 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["script","scrape","deddie","power","power service","greece power","deh","dei"],
+  "keywords": [
+    "script",
+    "scrape",
+    "deddie",
+    "power",
+    "power service",
+    "greece power",
+    "deh",
+    "dei"
+  ],
   "author": "Ioannis Karavas",
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
     "minimist": "^1.2.5",
+    "node-fetch": "^2.6.1",
     "pushover-notifications": "^1.2.2"
   }
 }
