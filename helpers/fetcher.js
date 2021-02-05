@@ -13,8 +13,8 @@ const fetcher = async (reqOptions) => {
       $('#tblOutages > tbody > tr').each((index, element) => {
         const tds = $(element).find('td')
         // Convert dates to machine readable date
-        const from = new Date($(tds[0]).text().replace('πμ', 'am').replace('μμ', 'pm'))
-        const to = new Date($(tds[1]).text().replace('πμ', 'am').replace('μμ', 'pm'))
+        const from = new Date($(tds[0]).text().replace('πμ', 'am').replace('μμ', 'pm')).toISOString()
+        const to = new Date($(tds[1]).text().replace('πμ', 'am').replace('μμ', 'pm')).toISOString()
         // Clean up texts for rest
         const municipality = $(tds[2]).text().replace(/(\r\n|\n|\r)/gm, '').trim()
         const location = $(tds[3]).text().replace(/(\r\n|\n|\r)/gm, '').trim()

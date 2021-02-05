@@ -29,15 +29,17 @@ const app = {
     let tmpOutages = app.storage.tmpOutages
 
     if (outages.length) {
-      // Keep already 'seen' outages as indexes using municipality-location-noteNumber
-      outages.map((outage) => {
-        indexes.push(`${outage.municipality}-${outage.location}-${outage.noteNumber}`)
-      })
+
+      // Keep already 'seen' outages as indexes using time / date / location
+      indexes = outages.map((o)=>`${o.from}-${o.to}-${o.location}`)
+
+      app.storage.newOutages = []
 
       // Keep only outages we got that don't appear in these indexes
-      app.storage.newOutages = tmpOutages.filter((outage) => 
-        !indexes.includes(`${outage.municipality}-${outage.location}-${outage.noteNumber}`)
-      )
+      app.storage.newOutages = tmpOutages.filter((o) =>{
+        const key = `${o.from}-${o.to}-${o.location}`
+        return !indexes.includes(key)
+      })
 
     } else { // No older outages, keep the new ones
       app.storage.newOutages = [...tmpOutages]
@@ -51,6 +53,8 @@ const app = {
       outages = outages.concat(app.storage.newOutages)
 
       updateDataFile(options, outages)
+
+      app.storage.outages = outages
 
     } else {
       log.info('hasNewOutages() : No new outages')
@@ -85,7 +89,7 @@ const app = {
       log.error('Failed to get outages')
       log.error(e)
     })
-    
+
   },
 
   run: async () => {
@@ -104,7 +108,7 @@ const app = {
       app.processData()
     }, options.interval * 60000)
   }
-  
+
 }
 
 const argopts = {
